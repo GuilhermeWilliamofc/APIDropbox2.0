@@ -113,6 +113,18 @@ async def coletar_links():
                                 bloco_atual["sinopse"] = " ".join(linhas[1:])
 
                         blocos.append(bloco_atual)
+                        
+                    elif canal.name in ["storage-teste", "2-temp", "3-temp"]:
+                        # Cria bloco avulso se houver vídeo mas nenhuma imagem associada no canal especial
+                        tem_vid = any((a.content_type and a.content_type.startswith("video")) or a.filename.endswith((".mp4", ".mov", ".webm", ".mkv")) for a in mensagem.attachments)
+                        if tem_vid:
+                            bloco_atual = {
+                                "capa": None,
+                                "titulo": mensagem.content.strip() if mensagem.content else "Vídeo Solto",
+                                "sinopse": "",
+                                "videos": [],
+                            }
+                            blocos.append(bloco_atual)
 
                     # 🎥 vídeos
                     for anexo in mensagem.attachments:
