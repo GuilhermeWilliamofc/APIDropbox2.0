@@ -177,7 +177,6 @@ async def coletar_links():
 
     gerar_html_videos("links_dos_filmes.txt", "links_dos_filmes.html")
     print("✅ HTML gerado: links_dos_filmes.html")
-    await client.close()  # <---- encerra o bot após gerar o HTML
 
 
 def gerar_html_videos(input_txt, output_txt):
@@ -346,6 +345,12 @@ async def collect_and_upload():
     if DISCORD_TOKEN is None:
         raise HTTPException(
             status_code=500, detail="DISCORD_TOKEN não definido no ambiente"
+        )
+        
+    if not client.is_ready():
+        raise HTTPException(
+            status_code=503,
+            detail="Bot Discord não está conectado ainda. Aguarde a inicialização da aplicação.",
         )
 
     if _collect_lock.locked():
