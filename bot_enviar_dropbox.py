@@ -186,7 +186,8 @@ def gerar_html_videos(input_txt, output_txt):
         "<html>\n<head>\n<meta charset='utf-8'>\n",
         "<style>\n",
         "  body { font-family: Arial; background:#111; color:#eee; }\n",
-        "  img { border-radius:10px; margin-bottom:10px; }\n",
+        "  img.capa { border-radius:10px; margin-bottom:10px; width:100%; max-width:220px; height:auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }\n",
+        "  @media (max-width: 600px) { img.capa { max-width: 140px; } }\n",
         "  .card { margin-bottom:30px; padding:10px; background:#1c1c1c; border-radius:12px; }\n",
         "  .album-btn { background-color: #333; color: white; padding: 10px; cursor: pointer; border: none; border-radius: 5px; margin-bottom: 5px; font-size: 16px; }\n",
         "  .album-btn:hover { background-color: #555; }\n",
@@ -221,7 +222,7 @@ def gerar_html_videos(input_txt, output_txt):
 
         elif linha.startswith("[CAPA]"):
             capa = linha.replace("[CAPA]", "")
-            html_output.append(f'<img src="{capa}" style="max-width:10%;" loading="lazy">\n')
+            html_output.append(f'<img src="{capa}" class="capa" loading="lazy">\n')
 
         elif linha.startswith("[TITULO]"):
             titulo = linha.replace("[TITULO]", "")
